@@ -1,0 +1,27 @@
+<html>
+<head>
+
+</head>
+<body>
+    <script>
+    var XFooProto = Object.create(HTMLElement.prototype);
+
+    // 1. Give x-foo a foo() method.
+    XFooProto.foo = function() {
+        alert('foo() called');
+    };
+
+    // 2. Define a property read-only "bar".
+    Object.defineProperty(XFooProto, "bar", {value: 5});
+
+    // 3. Register x-foo's definition.
+    var XFoo = document.registerElement('x-foo', {prototype: XFooProto});
+
+    // 4. Instantiate an x-foo.
+    var xfoo = document.createElement('x-foo');
+
+    // 5. Add it to the page.
+    document.body.appendChild(xfoo);
+    </script>
+</body>
+</html>

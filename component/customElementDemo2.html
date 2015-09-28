@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Web Component: custom element example</title>
+    <script>
+        var objectPrototype = Object.create(HTMLElement.prototype);
+        Object.defineProperty(objectPrototype, 'title', {
+            // value: 'bbb',
+            writable : true
+        });
+        objectPrototype.createdCallback = function() {
+            this.innerText = this.title;
+            this.addEventListener('click', function(e) {
+                alert('ooo');
+            });
+        };
+        objectPrototype.attributeChangedCallback = function(attrName, oldVal, newVal) {
+            this.innerText = this.title;
+        };
+        var  myNameElement = document.registerElement("my-name",{
+            prototype:objectPrototype
+        });
+
+        var MegaButton = document.registerElement('mega-button', {
+            prototype: Object.create(HTMLButtonElement.prototype),
+            extends: 'button'
+        });
+    </script>
+</head>
+<body>
+    <my-name title="Welcome to custom element 1"></my-name>
+    <br/>
+    <my-name title="Welcome to custom element 2"></my-name>
+    <br/>
+    <button is="mega-button"/>
+</body>
+</html>
